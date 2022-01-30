@@ -12,6 +12,8 @@ enum layers {
     _QWERTY,
     _LOWER,
     _RAISE,
+    _GAME,
+    _GAME_RAISE,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -27,13 +29,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
 
-  [_LOWER] = LAYOUT(
+    [_LOWER] = LAYOUT(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-    S(KC_GRV), S(KC_1), S(KC_2), S(KC_3), S(KC_4), S(KC_5),                      S(KC_6), S(KC_7), S(KC_8), S(KC_9), S(KC_0),S(KC_QUOT),
+    S(KC_GRV), S(KC_1), S(KC_2), S(KC_3), S(KC_4), S(KC_5),                      S(KC_6), S(KC_7), S(KC_8), S(KC_9), S(KC_0), KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     KC_GRAVE,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_QUOT,
+     KC_GRAVE,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_ENT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-    KC_LALT,S(KC_BSLS),S(KC_EQL),KC_MINS,S(KC_MINS),KC_EQL,                     KC_LBRC,KC_RBRC,S(KC_LBRC),S(KC_RBRC),KC_BSLS,KC_RALT,
+    KC_LALT,S(KC_BSLS),S(KC_EQL),KC_MINS,S(KC_MINS),KC_EQL,                      KC_QUOT, KC_LBRC, KC_RBRC,  KC_DOT, KC_BSLS,KC_RALT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LCTL, KC_LGUI, KC_LSFT,    XXXXXXX, XXXXXXX, XXXXXXX
                                       //`--------------------------'  `--------------------------'
@@ -49,13 +51,37 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           RGB_TOG, KC_BTN2, KC_BTN1,   RGB_RMOD, RGB_MOD, XXXXXXX
                                       //`--------------------------'  `--------------------------'
+  ),
+
+  [_GAME] = LAYOUT(
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+       KC_ESC,    KC_Q,    KC_E,    KC_W,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O, KC_SCLN, KC_BSPC,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+       KC_TAB,    KC_F,    KC_A,    KC_S,    KC_D,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L,    KC_P,  KC_ENT,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RALT,
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                  MO(_GAME_RAISE), KC_LCTL,  KC_SPC,     KC_SPC,   MO(1),   MO(2)
+                                      //`--------------------------'  `--------------------------'
+  ),
+
+  [_GAME_RAISE] = LAYOUT(
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+    TG(_GAME), XXXXXXX,    KC_1,    KC_2,    KC_3,    KC_Y,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      XXXXXXX, XXXXXXX,    KC_4,    KC_5,    KC_6,    KC_H,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      KC_LSFT, XXXXXXX,    KC_7,    KC_8,    KC_9,    KC_N,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX
+                                      //`--------------------------'  `--------------------------'
   )
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         // Reset the OLED clock to prevent from suspending
-        oled_suspend = false;
+        /* oled_suspend = false; */
         oled_timer = timer_read();
 
         // Save the RGB state

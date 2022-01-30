@@ -6,7 +6,10 @@
 #define MASTER_LEFT
 #define USE_SERIAL_PD2
 
+#define OLED_DRIVER_ENABLE
 #define OLED_TIMEOUT 60000 // milliseconds
+
+#define ENABLE_RGB_MATRIX_CYCLE_UP_DOWN
 
 #ifdef RGB_MATRIX_ENABLE
 #   define RGB_MATRIX_KEYPRESSES
