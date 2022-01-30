@@ -79,10 +79,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    // Only run when a key is pressed to avoid running on release as well
     if (record->event.pressed) {
-        // Reset the OLED clock to prevent from suspending
-        oled_timer = timer_read();
-        oled_suspend = false;
+        if (rgb_matrix_is_enabled()) {
+            // Reset the OLED clock to prevent from suspending
+            oled_timer = timer_read();
+            oled_suspend = false;
+        }
 
         // Save the RGB state
         eeconfig_save_user(keycode);
