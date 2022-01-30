@@ -21,12 +21,12 @@ void render_animation(uint8_t frame) {
 
 // Runs continuously and determines render state for OLED
 bool oled_task_user(void) {
-    if (!rgb_matrix_is_enabled()) {
-        oled_off();
-    } else {
+    if (rgb_matrix_is_enabled()) {
         if (!oled_suspend) {
             render_animation((timer_read() / 100) % 8);
         }
+    } else {
+        oled_off();
     }
 
     if (timer_elapsed(oled_timer) > OLED_TIMEOUT) {

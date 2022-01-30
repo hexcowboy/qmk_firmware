@@ -82,6 +82,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         // Reset the OLED clock to prevent from suspending
         oled_timer = timer_read();
+        oled_suspend = false;
 
         // Save the RGB state
         eeconfig_save_user(keycode);
