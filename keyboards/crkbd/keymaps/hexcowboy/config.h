@@ -1,13 +1,14 @@
 #pragma once
 
+#define OLED_DRIVER_ENABLE
 #undef USE_I2C
 #undef SSD1306OLED
+#define OLED_TIMEOUT 60000 // milliseconds
 
 #define MASTER_LEFT
 #define USE_SERIAL_PD2
 
-#define OLED_DRIVER_ENABLE
-#define OLED_TIMEOUT 60000 // milliseconds
+#define SPLIT_WPM_ENABLE
 
 #define ENABLE_RGB_MATRIX_CYCLE_UP_DOWN
 
