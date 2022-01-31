@@ -8,10 +8,10 @@ uint16_t oled_timer = 0;
 bool oled_suspend = false;
 
 // Initialize the OLED with 270 degree rotation and half brightness
-oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-    oled_set_brightness(3);
-    return OLED_ROTATION_270;
-}
+/* oled_rotation_t oled_init_user(oled_rotation_t rotation) { */
+/*     oled_set_brightness(3); */
+/*     return OLED_ROTATION_270; */
+/* } */
 
 // Renders the animation provided the frame (0-7)
 void render_animation(uint8_t frame) {
@@ -20,16 +20,17 @@ void render_animation(uint8_t frame) {
 
 // Runs continuously and determines render state for OLED
 bool oled_task_user(void) {
-    if (timer_elapsed(oled_timer) > OLED_TIMEOUT) {
-        oled_suspend = true;
-    }
+    return false; // debugging process_record_user
+    /* if (timer_elapsed(oled_timer) > OLED_TIMEOUT) { */
+    /*     oled_suspend = true; */
+    /* } */
 
-    if (rgb_matrix_is_enabled() && !oled_suspend) {
-        render_animation((timer_read() / 100) % 8);
-    } else {
-        oled_clear();
-        oled_off();
-    }
+    /* if (rgb_matrix_is_enabled() && !oled_suspend) { */
+    /*     render_animation((timer_read() / 100) % 8); */
+    /* } else { */
+    /*     oled_clear(); */
+    /*     oled_off(); */
+    /* } */
 
-    return false;
+    /* return false; */
 }
